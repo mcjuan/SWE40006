@@ -7,6 +7,9 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    env:
+      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+      PYTHONPATH: ${{ github.workspace }}
 
     steps:
       - name: Checkout code
@@ -23,7 +26,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest -q
+          python -m pytest -q
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
