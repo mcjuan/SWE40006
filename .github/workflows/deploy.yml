@@ -77,7 +77,7 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
         with:
           host: ${{ secrets.TEST_SERVER_IP }}
-          username: ubuntu
+          username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG,AWS_REGION
           script: |
@@ -141,7 +141,7 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
         with:
           host: ${{ secrets.PROD_SERVER_IP }}
-          username: ubuntu
+          username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG,AWS_REGION
           script: |
