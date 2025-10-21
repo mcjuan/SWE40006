@@ -1,7 +1,6 @@
 # app.py
 from flask import Flask, request, jsonify, render_template_string
 from calculator import OPERATIONS
-#test
 def create_app():
     app = Flask(__name__)
 
