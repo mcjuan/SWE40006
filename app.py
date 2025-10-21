@@ -1,8 +1,6 @@
 # app.py
 from flask import Flask, request, jsonify, render_template_string
 from calculator import OPERATIONS
-import math
-import time
 def create_app():
     app = Flask(__name__)
 
@@ -39,10 +37,6 @@ def create_app():
           </div>
         </form>
         <div class="result" id="result">Result will appear here…</div>
-          <div style="margin-top:1rem;">
-            <button id="load-btn" type="button">Run load test (1000 ops)</button>
-            <div class="result" id="load-result" style="margin-top:0.5rem;">Load test results will appear here…</div>
-          </div>
 
         
 
@@ -57,27 +51,6 @@ def create_app():
             const data = await res.json();
             out.textContent = res.ok ? `= ${data.result}` : `Error: ${data.error}`;
           });
-            // Load test button
-            const loadBtn = document.getElementById('load-btn');
-            const loadOut = document.getElementById('load-result');
-            loadBtn.addEventListener('click', async () => {
-              const ops = 1000; // default number of operations; adjust as needed
-              loadBtn.disabled = true;
-              loadOut.textContent = `Running ${ops} ops...`; 
-              try {
-                const res = await fetch(`/load?ops=${ops}`);
-                const data = await res.json();
-                if (res.ok) {
-                  loadOut.textContent = `Completed ${data.ops} ops in ${data.duration.toFixed(3)}s (acc=${data.acc.toFixed(3)})`;
-                } else {
-                  loadOut.textContent = `Error: ${data.error || 'unknown'}`;
-                }
-              } catch (err) {
-                loadOut.textContent = `Request failed: ${err.message}`;
-              } finally {
-                loadBtn.disabled = false;
-              }
-            });
         </script>
       </body>
     </html>
@@ -114,20 +87,6 @@ def create_app():
         except ValueError as e:
             return jsonify(error=str(e)), 400
         return jsonify(op=op, a=a, b=b, result=result)
-
-    @app.get('/load')
-    def load():
-        # Simple CPU-bound workload for load testing
-        ops = request.args.get('ops', default=1000, type=int)
-        if ops < 1 or ops > 10_000_000:
-            return jsonify(error='ops out of range (1..10000000)'), 400
-        start = time.time()
-        acc = 0.0
-        # perform floating point math to consume CPU
-        for i in range(1, ops + 1):
-            acc += math.sqrt(i) * math.sin(i) * math.cos(i)
-        duration = time.time() - start
-        return jsonify(ops=ops, duration=duration, acc=acc)
 
     return app
 
