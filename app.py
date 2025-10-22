@@ -1,12 +1,8 @@
 # app.py
 from flask import Flask, request, jsonify, render_template_string, session, redirect, url_for
 from calculator import OPERATIONS
-<<<<<<< HEAD
-# test
-=======
 import math
 
->>>>>>> ved-merge
 def create_app():
     app = Flask(__name__)
     app.secret_key = "change-me"
