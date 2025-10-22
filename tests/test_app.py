@@ -22,7 +22,7 @@ def test_div_by_zero_400():
     assert "division by zero" in resp.get_json()["error"]
 
 def test_invalid_op_400():
-    resp = client.get("/calc?op=sqrt&a=9&b=0")
+    resp = client.get("/calc?op=invalid_operation&a=9&b=0")
     assert resp.status_code == 400
     assert "Unsupported op" in resp.get_json()["error"]
 
