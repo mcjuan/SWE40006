@@ -64,7 +64,7 @@ def create_app():
       </head>
       <body class="{{ 'dark' if session.get('theme')=='dark' else '' }}">
         <div class="container">
-          <h1>Flaskulator</h1>
+          <h1>Scientific Calculator</h1>
 
           <div class="toolbar">
             <form action="{{ url_for('set_theme') }}" method="post">
